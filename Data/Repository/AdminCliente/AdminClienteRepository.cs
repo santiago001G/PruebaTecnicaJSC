@@ -25,7 +25,7 @@ namespace Data.Repository.AdminCliente
 
             try
             {
-                SqlCommand command = new SqlCommand("pr_consultar_clientes", _db.ObtenerConexion());
+                SqlCommand command = new SqlCommand("pr_consultar_clientes_detalle", _db.ObtenerConexion());
                 command.CommandType = System.Data.CommandType.StoredProcedure;
 
                 using (var lector = await command.ExecuteReaderAsync())
@@ -40,7 +40,11 @@ namespace Data.Repository.AdminCliente
                             RazonSocial = (string)lector["ClRazonSocial"],
                             PaisCodigo = (short)lector["ClPaisCodigo"],
                             DepartamentoCodigo = (int)lector["ClDptColCodigoDane"],
-                            MunicipioCodigo = (int)lector["ClDvsPltColCodigoDane"]
+                            MunicipioCodigo = (int)lector["ClDvsPltColCodigoDane"],
+                            NombreTipoIdentificacion = (string)lector["TpoIdnNombre"],
+                            Pais = (string)lector["PaisNombre"],
+                            Departamento = (string)lector["DptColNombredelDepartamento"],
+                            Municipio = (string)lector["DvsPltColNombreMunicipio"]
                         });
                     }
 

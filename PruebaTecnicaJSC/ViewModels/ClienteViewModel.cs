@@ -1,9 +1,9 @@
-﻿namespace Business.Models
+﻿namespace PruebaTecnicaJSC.ViewModels
 {
-    public class Cliente
+    public class ClienteViewModel
     {
         public int Id { get; set; }
-      
+
         public int TipoIdentificacion { get; set; }
 
         public string? NumeroIdentificacion { get; set; }
@@ -23,6 +23,5 @@
         public string? Departamento { get; set; }
 
         public string? Municipio { get; set; }
-
     }
 }
