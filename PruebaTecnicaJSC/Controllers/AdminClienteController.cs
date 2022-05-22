@@ -30,6 +30,10 @@ namespace PruebaTecnicaJSC.Controllers
                 await _arbolesBusiness.ConsultarListaTiposIdentificacion(),
                 modelo.TipoIdentificacion);
 
+            ViewBag.CodigosPaises = GenerarListaPaises(
+                await _arbolesBusiness.ConsultarListaPaises(),
+                modelo.TipoIdentificacion);
+
             return View(modelo);
         }
 
@@ -41,6 +45,24 @@ namespace PruebaTecnicaJSC.Controllers
             {
                 Text = x.TipoIdnNombre,
                 Value = x.TipoIdnId.ToString()
+            }));
+
+            if (idSeleccionado > default(int))
+            {
+                lista.FirstOrDefault(x => x.Value == idSeleccionado.ToString()).Selected = true;
+            }
+
+            return lista;
+        }
+
+        private List<SelectListItem> GenerarListaPaises(IEnumerable<ArbolPais> listaPaises, int idSeleccionado)
+        {
+            var lista = new List<SelectListItem>();
+
+            lista.AddRange(listaPaises.Select(x => new SelectListItem
+            {
+                Text = x.PaisNombre,
+                Value = x.Id.ToString()
             }));
 
             if (idSeleccionado > default(int))

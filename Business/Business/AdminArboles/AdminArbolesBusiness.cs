@@ -12,9 +12,16 @@ namespace Business.Business.AdminArboles
             _repository = repository;
         }
 
+        public async Task<IEnumerable<ArbolPais>> ConsultarListaPaises()
+        {
+            return await _repository.ConsultarArbolPais();
+        }
+
         public async Task<IEnumerable<TipoIdentificacion>> ConsultarListaTiposIdentificacion()
         {
             return await _repository.ConsultarTiposIdentificacion();
         }
+
+
     }
 }

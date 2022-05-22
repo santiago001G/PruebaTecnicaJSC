@@ -14,6 +14,41 @@ namespace Data.Repository.AdminCliente
             _db = db;
         }
 
+        public async Task<IEnumerable<ArbolPais>> ConsultarArbolPais()
+        {
+            List<ArbolPais> tiposIdentificacion = new List<ArbolPais>();
+
+            try
+            {
+                SqlCommand command = new SqlCommand("pr_consultar_arbol_pais", _db.ObtenerConexion());
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+
+                using (var lector = await command.ExecuteReaderAsync())
+                {
+                    while (await lector.ReadAsync())
+                    {
+                        tiposIdentificacion.Add(new ArbolPais()
+                        {
+                            Id = (short)lector["PaisCodigo"],
+                            PaisIso = (string)lector["PaisIso1"],
+                            PaisNombre = (string)lector["PaisNombre"],
+                        });
+                    }
+
+                    return tiposIdentificacion;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            finally
+            {
+                _db.Dispose();
+            }
+        }
+
         public async Task<IEnumerable<TipoIdentificacion>> ConsultarTiposIdentificacion()
         {
             List<TipoIdentificacion> tiposIdentificacion = new List<TipoIdentificacion>();
