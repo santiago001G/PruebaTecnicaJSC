@@ -49,6 +49,99 @@ namespace Data.Repository.AdminCliente
             }
         }
 
+        public async Task<IEnumerable<ArbolDepartamento>> ConsultarDepartamentos(int idPais)
+        {
+            List<ArbolDepartamento> arbolDepartamentos = new List<ArbolDepartamento>();
+
+            try
+            {
+                SqlCommand command = new SqlCommand("pr_consultar_arbol_departamento", _db.ObtenerConexion());
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+
+                SqlParameter parametroId = new SqlParameter
+                {
+                    ParameterName = "@DptColPaisCodigo",
+                    SqlDbType = System.Data.SqlDbType.Int,
+                    Value = idPais,
+                    Direction = System.Data.ParameterDirection.Input
+                };
+
+                command.Parameters.Add(parametroId);
+
+                using (var lector = await command.ExecuteReaderAsync())
+                {
+                    while (await lector.ReadAsync())
+                    {
+                        arbolDepartamentos.Add(new ArbolDepartamento()
+                        {
+                            DptColCodigo = (int)lector["DptColCodigo"],
+                            DptColCodigoDane = (int)lector["DptColCodigoDane"],
+                            DptColNombredelDepartamento =(string)lector["DptColNombredelDepartamento"],
+                            DptColPaisCodigo = (short)lector["DptColPaisCodigo"]
+                        });
+                    }
+
+                    return arbolDepartamentos;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            finally
+            {
+                _db.Dispose();
+            }
+        }
+
+        public async Task<IEnumerable<ArbolDivision>> ConsultarDivisiones(int idDepartamento)
+        {
+            List<ArbolDivision> arbolDivision = new List<ArbolDivision>();
+
+            try
+            {
+                SqlCommand command = new SqlCommand("pr_consultar_arbol_division", _db.ObtenerConexion());
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+
+                SqlParameter parametroId = new SqlParameter
+                {
+                    ParameterName = "@DvsPltColDptColCodigoDane",
+                    SqlDbType = System.Data.SqlDbType.Int,
+                    Value = idDepartamento,
+                    Direction = System.Data.ParameterDirection.Input
+                };
+
+                command.Parameters.Add(parametroId);
+
+                using (var lector = await command.ExecuteReaderAsync())
+                {
+                    while (await lector.ReadAsync())
+                    {
+                        arbolDivision.Add(new ArbolDivision()
+                        {
+                            DvsPltColCodigo = (int)lector["DvsPltColCodigo"],
+                            DvsPltColCodigoDane = (int)lector["DvsPltColCodigoDane"],
+                            DvsPltColNombreMunicipio = (string)lector["DvsPltColNombreMunicipio"],
+                            DvsPltColDepartamento = (string)lector["DvsPltColDepartamento"],
+                            DvsPltColDptColCodigoDane = (int)lector["DvsPltColDptColCodigoDane"],
+                        });
+                    }
+
+                    return arbolDivision;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            finally
+            {
+                _db.Dispose();
+            }
+        }
+
         public async Task<IEnumerable<TipoIdentificacion>> ConsultarTiposIdentificacion()
         {
             List<TipoIdentificacion> tiposIdentificacion = new List<TipoIdentificacion>();

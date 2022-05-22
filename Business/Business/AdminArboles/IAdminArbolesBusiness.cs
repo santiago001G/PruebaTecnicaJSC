@@ -6,5 +6,7 @@ namespace Business.Business.AdminArboles
     {
         Task<IEnumerable<TipoIdentificacion>> ConsultarListaTiposIdentificacion();
         Task<IEnumerable<ArbolPais>> ConsultarListaPaises();
+        Task<IEnumerable<ArbolDepartamento>> ConsultarListaDepartamentos(int idPais);
+        Task<IEnumerable<ArbolDivision>> ConsultarListaDivisiones(int idDepartamento);
     }
 }

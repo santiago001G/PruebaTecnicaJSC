@@ -29,12 +29,14 @@
         </div>
         <div class="mb-3">
             <label class="form-label">Departamento</label>
-            <select asp-for="DepartamentoCodigo" class="form-control"></select>
+            <select asp-for="DepartamentoCodigo" asp-items="ViewBag.CodigosDepartamento" class="form-control">
+                 <option value="">--Seleccione--</option>
+            </select>
             <span asp-validation-for="DepartamentoCodigo" class="text-danger"></span>
         </div>
         <div class="mb-3">
             <label class="form-label">Municipio</label>
-            <select asp-for="MunicipioCodigo" class="form-control"></select>
+            <select asp-for="MunicipioCodigo" asp-items="ViewBag.CodigosMunicipio" class="form-control"></select>
             <span asp-validation-for="MunicipioCodigo" class="text-danger"></span>
         </div>
     </form>
