@@ -12,5 +12,7 @@ namespace Business.Business.AdminClientes
         Task<IEnumerable<Cliente>> ConsultarClientes();
 
         Task<Cliente> ConsultarClienteId(int idCliente);
+
+        Task ActualizarCrearCliente(Cliente cliente);
     }
 }

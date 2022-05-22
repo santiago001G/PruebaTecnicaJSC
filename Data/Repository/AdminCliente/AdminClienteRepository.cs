@@ -28,8 +28,8 @@ namespace Data.Repository.AdminCliente
                 SqlCommand command = new SqlCommand("pr_consultar_cliente_id", _db.ObtenerConexion());
                 command.CommandType = System.Data.CommandType.StoredProcedure;
 
-                SqlParameter parametroId = new SqlParameter 
-                { 
+                SqlParameter parametroId = new SqlParameter
+                {
                     ParameterName = "@IdCliente",
                     SqlDbType = System.Data.SqlDbType.Int,
                     Value = idCliente,
@@ -114,6 +114,89 @@ namespace Data.Repository.AdminCliente
             {
                 _db.Dispose();
             }
+        }
+
+        public async Task CrearActualizarCliente(Cliente cliente)
+        {
+            try
+            {
+                SqlCommand command = new SqlCommand("pr_registrar_actualizar_cliente", _db.ObtenerConexion());
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+
+                var parametros = parametrosInsercionCliente(cliente);
+
+                command.Parameters.AddRange(parametros.ToArray());
+                await command.ExecuteReaderAsync();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            finally
+            {
+                _db.Dispose();
+            }
+        }
+
+        private List<SqlParameter> parametrosInsercionCliente(Cliente cliente)
+        {
+            List<SqlParameter> parametros = new List<SqlParameter>()
+            {
+                new SqlParameter()
+                {
+                    ParameterName = "@idCliente",
+                    SqlDbType = System.Data.SqlDbType.Int,
+                    Value = cliente.Id,
+                    Direction = System.Data.ParameterDirection.Input
+                },
+                new SqlParameter()
+                {
+                    ParameterName = "@tipoIdentificacion",
+                    SqlDbType = System.Data.SqlDbType.SmallInt,
+                    Value = cliente.TipoIdentificacion,
+                    Direction = System.Data.ParameterDirection.Input
+                },
+                new SqlParameter()
+                {
+                    ParameterName = "@numeroIdentificacion",
+                    SqlDbType = System.Data.SqlDbType.VarChar,
+                    Size = 30,
+                    Value = cliente.NumeroIdentificacion,
+                    Direction = System.Data.ParameterDirection.Input
+                },
+                new SqlParameter()
+                {
+                    ParameterName = "@razonSocial",
+                    SqlDbType = System.Data.SqlDbType.VarChar,
+                    Value = cliente.RazonSocial,
+                    Size = 150,
+                    Direction = System.Data.ParameterDirection.Input
+                },
+                new SqlParameter()
+                {
+                    ParameterName = "@codigoPais",
+                    SqlDbType = System.Data.SqlDbType.SmallInt,
+                    Value = cliente.PaisCodigo,
+                    Direction = System.Data.ParameterDirection.Input
+                },
+                new SqlParameter()
+                {
+                    ParameterName = "@codigoDepartamento",
+                    SqlDbType = System.Data.SqlDbType.Int,
+                    Value = cliente.DepartamentoCodigo,
+                    Direction = System.Data.ParameterDirection.Input
+                },
+                 new SqlParameter()
+                {
+                    ParameterName = "@codigoDivision",
+                    SqlDbType = System.Data.SqlDbType.Int,
+                    Value = cliente.MunicipioCodigo,
+                    Direction = System.Data.ParameterDirection.Input
+                }
+            };
+
+            return parametros;
         }
     }
 }

@@ -7,5 +7,7 @@ namespace Business.Interfaces
         Task<IEnumerable<Cliente>> ConsultarClientes();
 
         Task<Cliente> ConsultarClienteId(int idCliente);
+
+        Task CrearActualizarCliente(Cliente cliente);
     }
 }

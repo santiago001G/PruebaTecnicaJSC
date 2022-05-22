@@ -17,14 +17,36 @@ namespace PruebaTecnicaJSC.Controllers.ApiControllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Cliente>>> Get()
+        public async Task<ActionResult<Cliente>> Get(int idCliente)
         {
-            List<Cliente> dataRetorno = new List<Cliente>();
-            var clientesConsultados = await _business.ConsultarClientes();
+            var clienteConsultados = await _business.ConsultarClienteId(idCliente);
 
-            dataRetorno.AddRange(clientesConsultados);
+            return clienteConsultados;
+        }
 
-            return dataRetorno;
+        [HttpPost]
+        public async Task<ActionResult<Cliente>> Post(Cliente cliente)
+        {
+            if (cliente.Id==default(int))
+            {
+                await _business.ActualizarCrearCliente(cliente);
+
+                return Ok();
+            }
+
+            return Problem();
+        }
+
+        [HttpPut]
+        public async Task<ActionResult<Cliente>> Put(Cliente cliente)
+        {
+            if (cliente.Id > default(int))
+            {
+                await _business.ActualizarCrearCliente(cliente);
+
+                return Ok();
+            }
+            return Problem();
         }
 
     }

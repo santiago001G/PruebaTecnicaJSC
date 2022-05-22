@@ -30,11 +30,41 @@ namespace PruebaTecnicaJSC.Controllers
 
             ViewBag.CodigosPaises = GenerarListaPaises(await _arbolesBusiness.ConsultarListaPaises(),modelo.PaisCodigo);
 
-            ViewBag.CodigosDepartamento = GenerarListaDepartamentos(await _arbolesBusiness.ConsultarListaDepartamentos(modelo.PaisCodigo),modelo.DepartamentoCodigo);
+            if (modelo !=null)
+            {
+                ViewBag.CodigosDepartamento = GenerarListaDepartamentos(await _arbolesBusiness.ConsultarListaDepartamentos(modelo.PaisCodigo), modelo.DepartamentoCodigo);
 
-            ViewBag.CodigosMunicipio = GenerarListaDivisiones(await  _arbolesBusiness.ConsultarListaDivisiones(modelo.DepartamentoCodigo), modelo.MunicipioCodigo);
+                ViewBag.CodigosMunicipio = GenerarListaDivisiones(await _arbolesBusiness.ConsultarListaDivisiones(modelo.DepartamentoCodigo), modelo.MunicipioCodigo);
+            }
 
             return View(modelo);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CrearEditarCliente(Cliente modelo)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(modelo);
+            }
+
+            await _business.ActualizarCrearCliente(modelo);
+
+            return RedirectToAction(nameof(HomeController.Index), "Home");
+        }
+
+        public async Task<IActionResult> ConsultarDepartamentos(int idPais) 
+        {
+            var departamentos = await _arbolesBusiness.ConsultarListaDepartamentos(idPais);
+
+            return Json(departamentos);
+        }
+
+        public async Task<IActionResult> ConsultarDivisiones(int idDepartamento)
+        {
+            var divisiones = await _arbolesBusiness.ConsultarListaDivisiones(idDepartamento);
+
+            return Json(divisiones);
         }
 
         private List<SelectListItem> GenerarListaTiposIdentificacion(IEnumerable<TipoIdentificacion> listaTipos, int idSeleccionado)
@@ -47,7 +77,7 @@ namespace PruebaTecnicaJSC.Controllers
                 Value = x.TipoIdnId.ToString()
             }));
 
-            if (idSeleccionado > default(int))
+            if (idSeleccionado != default(int))
             {
                 lista.FirstOrDefault(x => x.Value == idSeleccionado.ToString()).Selected = true;
             }

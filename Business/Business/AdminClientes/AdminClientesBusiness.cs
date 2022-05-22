@@ -17,6 +17,11 @@ namespace Business.Business.AdminClientes
             _repository = repository;
         }
 
+        public async Task ActualizarCrearCliente(Cliente cliente)
+        {
+            await _repository.CrearActualizarCliente(cliente);
+        }
+
         public async Task<Cliente> ConsultarClienteId(int idCliente)
         {
             if (idCliente > default(int))
