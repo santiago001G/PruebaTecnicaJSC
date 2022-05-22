@@ -1,3 +1,4 @@
+using Business.Business.AdminArboles;
 using Business.Business.AdminClientes;
 using Business.Interfaces;
 using Data.Database;
@@ -14,7 +15,11 @@ builder.Services.AddSingleton<IPruebaDatabase>(x => new
 #region Inyeccion de dependencias
 
 builder.Services.AddTransient<IAdminClienteRepository, AdminClienteRepository>();
+builder.Services.AddTransient<IAdminArbolesRepository, AdminArbolesRepository>();
+
 builder.Services.AddTransient<IAdminClientesBusiness, AdminClientesBusiness>();
+builder.Services.AddTransient<IAdminArbolesBusiness, AdminArbolesBusiness>();
+
 
 #endregion
 

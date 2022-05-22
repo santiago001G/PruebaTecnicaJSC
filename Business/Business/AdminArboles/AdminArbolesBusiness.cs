@@ -1,6 +1,20 @@
-﻿namespace Business.Business.AdminArboles
+﻿using Business.Interfaces;
+using Business.Models;
+
+namespace Business.Business.AdminArboles
 {
-    public class AdminArbolesBusiness
+    public class AdminArbolesBusiness : IAdminArbolesBusiness
     {
+        private readonly IAdminArbolesRepository _repository;
+
+        public AdminArbolesBusiness(IAdminArbolesRepository repository)
+        {
+            _repository = repository;
+        }
+
+        public async Task<IEnumerable<TipoIdentificacion>> ConsultarListaTiposIdentificacion()
+        {
+            return await _repository.ConsultarTiposIdentificacion();
+        }
     }
 }
