@@ -1,0 +1,41 @@
+﻿@using Business.Models
+@model Cliente
+
+<div class="container">
+    <form asp-action="CrearEditarCliente" asp-controller="AdminCliente" method="post">
+        <div class="mb-3">
+            <label class="form-label">Tipo Identificacion</label>
+            <select asp-for="TipoIdentificacion" asp-items="ViewBag.TiposIdentificacion" class="form-control">
+                <option value="">--Seleccione--</option>
+            </select>
+            <span asp-validation-for="TipoIdentificacion" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Identificación</label>
+            <input asp-for="NumeroIdentificacion" class="form-control" />
+            <span asp-validation-for="NumeroIdentificacion" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Razon Social</label>
+            <input asp-for="RazonSocial" class="form-control" />
+            <span asp-validation-for="RazonSocial" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Pais</label>
+            <select asp-for="PaisCodigo" asp-items="ViewBag.CodigosPaises" class="form-control">
+                <option value="">--Seleccione--</option>
+            </select>
+            <span asp-validation-for="PaisCodigo" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Departamento</label>
+            <select asp-for="DepartamentoCodigo" class="form-control"></select>
+            <span asp-validation-for="DepartamentoCodigo" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Municipio</label>
+            <select asp-for="MunicipioCodigo" class="form-control"></select>
+            <span asp-validation-for="MunicipioCodigo" class="text-danger"></span>
+        </div>
+    </form>
+</div>

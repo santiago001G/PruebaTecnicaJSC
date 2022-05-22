@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Business.Business.AdminClientes;
+using Business.Models;
+using Microsoft.AspNetCore.Mvc;
 using PruebaTecnicaJSC.Models;
 using System.Diagnostics;
 
@@ -7,15 +9,19 @@ namespace PruebaTecnicaJSC.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IAdminClientesBusiness _business;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IAdminClientesBusiness business)
         {
             _logger = logger;
+            _business = business;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var listaClientes = await _business.ConsultarClientes();
+
+            return View(listaClientes);
         }
 
         public IActionResult Privacy()

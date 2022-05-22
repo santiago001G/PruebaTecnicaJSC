@@ -17,6 +17,16 @@ namespace Business.Business.AdminClientes
             _repository = repository;
         }
 
+        public async Task<Cliente> ConsultarClienteId(int idCliente)
+        {
+            if (idCliente > default(int))
+            {
+                return await _repository.ConsultarClienteId(idCliente);
+            }
+
+            return new Cliente();
+        }
+
         public async Task<IEnumerable<Cliente>> ConsultarClientes()
         {
             return  await _repository.ConsultarClientes();

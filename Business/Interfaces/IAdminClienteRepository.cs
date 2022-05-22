@@ -10,5 +10,7 @@ namespace Business.Interfaces
     public interface IAdminClienteRepository
     {
         Task<IEnumerable<Cliente>> ConsultarClientes();
+
+        Task<Cliente> ConsultarClienteId(int idCliente);
     }
 }

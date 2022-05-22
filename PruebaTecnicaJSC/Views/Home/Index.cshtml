@@ -1,8 +1,34 @@
-﻿@{
+﻿@using Business.Models
+@model List<Cliente>
+
+@{
     ViewData["Title"] = "Home Page";
 }
-
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<a asp-action="CrearEditarCliente" asp-controller="AdminCliente" class="btn btn-success">Crear Cliente</a>
+<table class="table">
+    <thead>
+        <tr>
+            <th>#Id</th>
+            <th>Tipo Identificación</th>
+            <th>Identificacion</th>
+            <th>Razon Social</th>
+            <th>Departamento</th>
+            <th>Municipio</th>
+            <th></th>
+        </tr>
+    </thead>
+            <tbody>
+            @foreach (var cliente in Model)
+            {
+                <tr>
+                    <td>@cliente.Id</td>
+                    <td>@cliente.NombreTipoIdentificacion</td>
+                    <td>@cliente.NumeroIdentificacion</td>
+                    <td>@cliente.RazonSocial</td>
+                    <td>@cliente.Departamento</td>
+                    <td>@cliente.Municipio</td>
+                    <td><a asp-action="CrearEditarCliente" asp asp-controller="AdminCliente" asp-route-idCliente="@cliente.Id" class="btn btn-info">Editar</a></td>
+                </tr>
+            }
+        </tbody>
+</table>
